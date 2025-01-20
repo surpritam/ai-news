@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# **AI Daily Digest**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+AI Daily Digest is a **React** application designed to fetch and display AI-related news articles. The app categorizes news based on professional fields, allowing users to filter articles for their specific interests. With a responsive and clean design, it works seamlessly across mobile and desktop devices.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## **Features**
 
-### `npm start`
+1. **AI News Fetching**
+   - Uses the [NewsAPI](https://newsapi.org/) to fetch AI-related news articles.
+   - Articles are categorized based on predefined professions or interests.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Article Categorization**
+   - Categories include:
+     - Healthcare
+     - Finance
+     - Education
+     - Engineering
+     - Marketing
+     - Law
+     - Human Resources
+     - Sports
+     - Gaming
+     - Manufacturing
+     - Transportation
+     - Journalism
+     - Other
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Local Caching**
+   - Caches news articles in **localStorage** for 1 hour to improve performance and reduce API calls.
 
-### `npm test`
+4. **Responsive Design**
+   - Built with **Material-UI** for a mobile-first, fully responsive user interface.
+   - Displays a single column on smaller screens and a grid layout on larger screens.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. **Dynamic Features**
+   - Articles are sorted by **publish date** (latest first).
+   - Displays article images, titles, descriptions, sources, and published dates.
 
-### `npm run build`
+6. **Category Filtering**
+   - Users can filter articles by profession or interest using a dropdown selector.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## **Getting Started**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **Prerequisites**
 
-### `npm run eject`
+- **Node.js**: v14 or higher (LTS recommended)
+- **npm**: v6 or higher (or **yarn** v1+)
+- A valid [NewsAPI](https://newsapi.org/) API Key
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **Installation**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/surpritam/ai-news.git
+   cd ai-news
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file in the root directory and add your NewsAPI key:
+   ` REACT_APP_NEWSAPI_KEY=your_newsapi_key_here `
+4. Start the development server:
+   ```bash
+   npm start
+   ```
+5. Open your browser and visit
+   ```bash
+   http://localhost:3000
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## **Usage**
+1. Select a category from the dropdown menu (e.g., Healthcare, Finance, Technology).
+2. View AI news articles tailored to the selected category.
+3. Click on "Read More" to access the full article on the original publisher's site.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## **Technologies Used**
+* React: Frontend framework
+* Material-UI: Component library for responsive UI
+* Axios: HTTP client for API requests
+* NewsAPI: External news source API
+* localStorage: Browser storage for caching articles
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [NewsAPI](https://newsapi.org/) for providing the news data.
+- [Material-UI](https://mui.com/) for the UI components.
+- The open-source community for making projects like this possible.
