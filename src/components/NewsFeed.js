@@ -41,7 +41,7 @@ function NewsFeed({ selectedCategory }) {
   const [articles, setArticles] = useState([]);
   const [error, setError] = useState(null);
 
-  const API_KEY = process.env.REACT_APP_NEWSAPI_KEY;
+  const API_KEY = process.env.REACT_APP_GNEWS_API_KEY;
   const CACHE_EXPIRATION = 3600000; // 1 hour
 
   useEffect(() => {
@@ -66,7 +66,7 @@ function NewsFeed({ selectedCategory }) {
     const fetchNews = async () => {
       try {
         const query = `AI%20AND%20${encodeURIComponent(selectedCategory)}`;
-        const url = `https://newsapi.org/v2/everything?q=${query}&language=en&apiKey=${API_KEY}`;
+        const url = `https://gnews.io/api/v4/search?q=${query}&lang=en&country=us&max=50&apikey=${API_KEY}`;
         const response = await axios.get(url);
 
         let fetchedArticles = response.data.articles || [];
@@ -124,10 +124,10 @@ function NewsFeed({ selectedCategory }) {
                 height: '100%',
               }}
             >
-              {article.urlToImage && (
+              {article.image && (
                 <CardMedia
                   component="img"
-                  image={article.urlToImage}
+                  image={article.image}
                   alt={article.title}
                   sx={{ maxHeight: 250, objectFit: 'cover' }}
                 />
