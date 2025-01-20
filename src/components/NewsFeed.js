@@ -1,6 +1,41 @@
-// src/components/NewsFeed.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+} from '@mui/material';
+import Grid from '@mui/material/Grid2';
+
+const categories = {
+  Healthcare: ['medicine', 'hospital', 'health', 'pharma', 'doctor', 'nurse'],
+  Finance: ['economy', 'stock', 'crypto', 'investment', 'bank', 'money', 'trading'],
+  Education: ['school', 'university', 'student', 'learning', 'teacher', 'classroom'],
+  Technology: ['AI', 'software', 'robot', 'machine learning', 'tech', 'coding', 'programming'],
+  Engineering: ['engineer', 'infrastructure', 'mechanical', 'civil', 'electrical', 'design'],
+  Marketing: ['advertising', 'campaign', 'promotion', 'branding', 'social media', 'SEO'],
+  Law: ['court', 'legal', 'lawyer', 'justice', 'legislation', 'contract', 'policy'],
+  HumanResources: ['recruitment', 'hiring', 'employee', 'HR', 'benefits', 'team management'],
+  Sports: ['football', 'cricket', 'basketball', 'tennis', 'athlete', 'tournament'],
+  Gaming: ['games', 'video games', 'e-sports', 'console', 'streaming', 'gamers'],
+  Manufacturing: ['factory', 'production', 'automation', 'machinery', 'supply chain'],
+  Transportation: ['cars', 'trucks', 'shipping', 'airlines', 'logistics', 'infrastructure'],
+  Journalism: ['news', 'reporting', 'media', 'interview', 'article', 'press'],
+  Other: [],
+};
+
+const categorizeArticle = (title, description) => {
+  const content = `${title} ${description}`.toLowerCase();
+  for (const [category, keywords] of Object.entries(categories)) {
+    if (keywords.some((keyword) => content.includes(keyword))) {
+      return category;
+    }
+  }
+  return 'Other';
+};
 
 function NewsFeed({ selectedCategory }) {
   const [articles, setArticles] = useState([]);
@@ -23,7 +58,6 @@ function NewsFeed({ selectedCategory }) {
       const now = Date.now();
 
       if (now - parsedData.timestamp < CACHE_EXPIRATION) {
-        console.log(`Using cached data for category: ${selectedCategory}`);
         setArticles(parsedData.articles);
         return;
       }
@@ -37,17 +71,25 @@ function NewsFeed({ selectedCategory }) {
 
         let fetchedArticles = response.data.articles || [];
 
-        // 1) Filter out articles with "[Removed]" in the title
-        fetchedArticles = fetchedArticles.filter(article => (
-          article.title !== '[Removed]' && article.title !== '[removed]'
-        ));
+        // Filter out articles with "[Removed]" in the title
+        fetchedArticles = fetchedArticles.filter(
+          (article) =>
+            article.title !== '[Removed]' && article.title !== '[removed]'
+        );
 
-        setArticles(fetchedArticles);
+        // Sort articles by date and categorize
+        const categorizedArticles = fetchedArticles
+          .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+          .map((article) => ({
+            ...article,
+            category: categorizeArticle(article.title, article.description),
+          }));
 
-        // 2) Save to localStorage with timestamp
+        setArticles(categorizedArticles);
+
         const dataToStore = {
-          articles: fetchedArticles,
-          timestamp: Date.now()
+          articles: categorizedArticles,
+          timestamp: Date.now(),
         };
         localStorage.setItem(cacheKey, JSON.stringify(dataToStore));
       } catch (err) {
@@ -61,9 +103,9 @@ function NewsFeed({ selectedCategory }) {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-semibold mb-3">
+      <Typography variant="h5" sx={{ mb: 2 }}>
         AI News: {selectedCategory}
-      </h2>
+      </Typography>
 
       {error && (
         <div className="text-red-500 bg-red-50 p-3 rounded mb-3">
@@ -71,22 +113,61 @@ function NewsFeed({ selectedCategory }) {
         </div>
       )}
 
-      <div className="space-y-4">
+      {/* Ensure alignItems="stretch" to make columns uniform */}
+      <Grid container spacing={3} alignItems="stretch">
         {articles.map((article, index) => (
-          <div key={index} className="bg-white rounded shadow p-4">
-            <h3 className="text-lg font-medium">{article.title}</h3>
-            <p className="text-sm text-gray-700 mt-1">{article.description}</p>
-            <a
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-blue-500 mt-2"
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <Card
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+              }}
             >
-              Read more
-            </a>
-          </div>
+              {article.urlToImage && (
+                <CardMedia
+                  component="img"
+                  image={article.urlToImage}
+                  alt={article.title}
+                  sx={{ maxHeight: 250, objectFit: 'cover' }}
+                />
+              )}
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography variant="h6" gutterBottom noWrap>
+                  {article.title}
+                </Typography>
+
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 1 }}
+                  className="descriptionClamp"
+                >
+                  {article.description}
+                </Typography>
+
+                <Typography variant="caption" color="text.secondary">
+                  {article.source?.name} •{' '}
+                  {new Date(article.publishedAt).toLocaleDateString()}
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ mt: 'auto' }}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  component="a"
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Read More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
         ))}
-      </div>
+      </Grid>
     </div>
   );
 }

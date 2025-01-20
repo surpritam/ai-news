@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 function CategorySelector({ selectedCategory, onCategoryChange }) {
   // Extended list of AI-related or general categories
@@ -7,6 +8,7 @@ function CategorySelector({ selectedCategory, onCategoryChange }) {
     'Finance',
     'Education',
     'Engineering',
+    'Technology',
     'Marketing',
     'Law',
     'Human Resources',
@@ -18,21 +20,23 @@ function CategorySelector({ selectedCategory, onCategoryChange }) {
   ];
 
   return (
-    <div className="p-4 bg-gray-200">
-      <h3 className="text-md font-medium mb-2">Select Your Profession:</h3>
-      <select
-        value={selectedCategory}
-        onChange={(e) => onCategoryChange(e.target.value)}
-        // Make the text larger & more spaced
-        className="border p-3 rounded text-base"
-      >
-        {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Box sx={{ p: 2, backgroundColor: '#f5f5f5' }}>
+      <FormControl fullWidth>
+        <InputLabel id="category-label">Select Your Profession</InputLabel>
+        <Select
+          labelId="category-label"
+          value={selectedCategory}
+          label="Select Your Profession"
+          onChange={(e) => onCategoryChange(e.target.value)}
+        >
+          {categories.map((cat) => (
+            <MenuItem key={cat} value={cat}>
+              {cat}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 }
 
