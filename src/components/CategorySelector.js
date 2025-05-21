@@ -1,8 +1,6 @@
 import React from 'react';
-import { Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 function CategorySelector({ selectedCategory, onCategoryChange }) {
-  // Extended list of AI-related or general categories
   const categories = [
     'Healthcare',
     'Finance',
@@ -20,23 +18,19 @@ function CategorySelector({ selectedCategory, onCategoryChange }) {
   ];
 
   return (
-    <Box sx={{ p: 2, backgroundColor: '#f5f5f5' }}>
-      <FormControl fullWidth>
-        <InputLabel id="category-label">Select Your Profession</InputLabel>
-        <Select
-          labelId="category-label"
-          value={selectedCategory}
-          label="Select Your Profession"
-          onChange={(e) => onCategoryChange(e.target.value)}
-        >
-          {categories.map((cat) => (
-            <MenuItem key={cat} value={cat}>
-              {cat}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <div className="w-full flex justify-center my-4">
+      <select
+        className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-700 text-base"
+        value={selectedCategory}
+        onChange={(e) => onCategoryChange(e.target.value)}
+      >
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
 

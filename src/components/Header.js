@@ -1,39 +1,12 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton} from '@mui/material';
-import InsightsIcon from '@mui/icons-material/Insights';
 
 function Header() {
   return (
-    <AppBar
-      position="static"
-      sx={{
-        background: 'linear-gradient(90deg, #1e3a8a, #3b82f6, #1e3a8a)',
-        animation: 'gradient 6s ease infinite',
-        '@keyframes gradient': {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
-        },
-        backgroundSize: '200% 200%',
-        boxShadow: 4,
-      }}
-    >
-      <Toolbar>
-        {/* Icon */}
-        <IconButton edge="start" color="inherit" sx={{ mr: 2 }}>
-          <InsightsIcon fontSize="large" />
-        </IconButton>
-
-        {/* Title */}
-        <Typography
-          variant="h5"
-          component="div"
-          sx={{ flexGrow: 1, fontWeight: 'bold', letterSpacing: 1 }}
-        >
-          AI Daily Digest
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <header className="w-full flex flex-col items-center py-8 bg-white border-b border-gray-100 mb-4">
+      <img src="/logo192.png" alt="AI Daily Digest Logo" className="w-16 h-16 mb-2" />
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-1 text-center">AI Daily Digest</h1>
+      <p className="text-gray-500 text-center text-base">Your personalized AI news, simply delivered</p>
+    </header>
   );
 }
 
