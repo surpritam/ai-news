@@ -25,7 +25,8 @@ async function fetchTicker(company) {
   const queries = [normalized, normalized + ' Inc', normalized + ' Ltd'];
   for (const q of queries) {
     try {
-      const response = await fetch(`https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(q)}&quotesCount=3&newsCount=0`);
+      // Use backend proxy instead of direct Yahoo Finance call
+      const response = await fetch(`/api/yahoo-search?q=${encodeURIComponent(q)}`);
       const data = await response.json();
       if (data.quotes && data.quotes.length > 0) {
         // Only allow public companies (EQUITY) or private companies (PRIVATE_COMPANY)
